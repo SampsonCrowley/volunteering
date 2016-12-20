@@ -4,7 +4,7 @@ class AdminController < ApplicationController
 
   def index
     UpdateDataJob.perform_later if Sidekiq::ScheduledSet.new.none? {|scheduled| scheduled.queue == "update_data" }
-    redirect_to states_path
+    @schedules = Sidekiq::ScheduledSet.new
   end
 
   def new
