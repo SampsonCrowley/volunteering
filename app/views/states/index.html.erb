@@ -1,0 +1,54 @@
+<script>
+function addLoadEvent(func) {
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      if (oldonload) {
+        oldonload();
+      }
+      func();
+    }
+  }
+}
+</script>
+<% @results.each do |state, metrics| %>
+<div id="chartContainer<%= state.gsub(" ", "") %>" style="height: 300px; width: 100%;"></div>
+<script type="text/javascript">
+  addLoadEvent(function() {
+    console.log("Loaded <%= state.gsub(" ", "") %>")
+    var chart<%= state.gsub(" ", "") %> = new CanvasJS.Chart("chartContainer<%= state.gsub(" ", "") %>",
+    {
+      title:{
+        text: "<%= state %>"
+      },
+                  animationEnabled: true,
+      legend:{
+        verticalAlign: "center",
+        horizontalAlign: "left",
+        fontSize: 20,
+        fontFamily: "Helvetica"
+      },
+      theme: "theme2",
+      data: [
+      {
+        type: "pie",
+        indexLabelFontFamily: "Garamond",
+        indexLabelFontSize: 20,
+        indexLabel: "{label} {y}%",
+        startAngle:-20,
+        showInLegend: true,
+        toolTipContent:"{legendText} {y}%",
+        dataPoints: [
+          <% metrics.each do |name, percentage| %>
+            {  y: <%= percentage %>, legendText:"<%= name %>", label: "<%= name %>" },
+          <% end %>
+        ]
+      }
+      ]
+    });
+    chart<%= state.gsub(" ", "") %>.render();
+  })
+</script>
+<% end %>

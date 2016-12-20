@@ -1,0 +1,2 @@
+class StateStat < ApplicationRecord
+end
