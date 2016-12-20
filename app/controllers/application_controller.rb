@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
     def current_user
       create_session unless session[:user_id]
-      @current_user ||= User.find_by_id(decrypt(session[:user_id])) if session[:user_id]
+      @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
     end
     helper_method :current_user
 

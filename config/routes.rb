@@ -4,4 +4,7 @@ Rails.application.routes.draw do
   root to: 'states#index'
   resources :states
   resources :admin
+  resource :session
+  get '/logout' => 'sessions#destroy'
+  get '/login' => 'sessions#new'
 end

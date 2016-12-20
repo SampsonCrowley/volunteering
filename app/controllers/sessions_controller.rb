@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     def new
       create_session unless session[:user_id]
       if signed_in_user?
-        redirect_to users_path
+        redirect_to admin_index_path
       end
     end
 
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
     def destroy
       sign_out
       flash[:success] = ["Signed Out"]
-      redirect_to signup_path
+      redirect_to states_path
     end
 
     def show
@@ -37,10 +37,10 @@ class SessionsController < ApplicationController
                               "Your account has been locked for due to too many incorrect login attempts.",
                               "You may try again in #{(Time.now - @user.last_attempt).strftime("%M")} minutes"
                             ]
-          redirect_to root_path
+          redirect_to states_path
         when "valid"
           sign_in(@user, params[:remember] == "true")
-          redirect_to users_path
+          redirect_to admin_index_path
         else
           flash.now[:danger] = [
                                   "Incorrect Credentials",
