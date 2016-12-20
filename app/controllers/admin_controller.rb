@@ -1,6 +1,5 @@
 require 'sidekiq/api'
 class AdminController < ApplicationController
-  skip_before_action :authenticate, only: [:new, :create]
   protect_from_forgery with: :exception
 
   def index
