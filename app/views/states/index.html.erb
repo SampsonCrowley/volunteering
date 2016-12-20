@@ -13,6 +13,16 @@ function addLoadEvent(func) {
   }
 }
 </script>
+
+<h1> Welcome to the Volunteer Dashboard! </h1>
+
+<p> please select a state to view more in-depth statistics </p>
+
+<form action="<%= states_path %>">
+  <%= select_tag "state", options_for_select(@states) %>
+  <button type="submit">View State</button>
+</form>
+
 <% @results.each do |state, metrics| %>
 <div id="chartContainer<%= state.gsub(" ", "") %>" style="height: 300px; width: 100%;"></div>
 <script type="text/javascript">

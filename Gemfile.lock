@@ -50,8 +50,13 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.3)
-    connection_pool (2.2.1)
+    daemons (1.2.4)
     debug_inspector (0.0.2)
+    delayed_job (4.1.2)
+      activesupport (>= 3.0, < 5.1)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
+      delayed_job (>= 3.0, < 5)
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.14)
@@ -89,8 +94,6 @@ GEM
     pg (0.19.0)
     puma (3.6.2)
     rack (2.0.1)
-    rack-protection (1.5.3)
-      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.0.1)
@@ -120,7 +123,6 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
-    redis (3.3.2)
     sass (3.4.23)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -128,11 +130,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sidekiq (4.2.7)
-      concurrent-ruby (~> 1.0)
-      connection_pool (~> 2.2, >= 2.2.0)
-      rack-protection (>= 1.5.0)
-      redis (~> 3.2, >= 3.2.1)
     soda-ruby (0.2.21)
       hashie (~> 3.4.2)
       multipart-post (~> 2.0.0)
@@ -177,6 +174,9 @@ DEPENDENCIES
   bcrypt
   byebug
   coffee-rails (~> 4.2)
+  daemons
+  delayed_job
+  delayed_job_active_record
   figaro
   jbuilder (~> 2.5)
   jquery-rails
@@ -185,7 +185,6 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
   sass-rails (~> 5.0)
-  sidekiq
   soda-ruby
   spring
   spring-watcher-listen (~> 2.0.0)

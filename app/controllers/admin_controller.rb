@@ -3,8 +3,8 @@ class AdminController < ApplicationController
   protect_from_forgery with: :exception
 
   def index
-    UpdateDataJob.perform_later if Sidekiq::ScheduledSet.new.none? {|scheduled| scheduled.queue == "update_data" }
-    @schedules = Sidekiq::ScheduledSet.new
+    UpdateDataJob.perform_later if Delayed::Job.all.none? {|job| !!(job.handler =~ /UpdateDataJob/) }
+    @schedules = Delayed::Job.all
   end
 
   def new

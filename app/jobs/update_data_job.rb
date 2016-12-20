@@ -10,7 +10,7 @@ class UpdateDataJob < ApplicationJob
 
   after_perform do
     if Sidekiq::ScheduledSet.new.none? {|scheduled| scheduled.queue == "update_data" }
-      UpdateDataJob.set(wait: 60.minutes).perform_later
+      UpdateDataJob.set(wait: 60.minutes).perform_later if Delayed::Job.all.none? {|job| !!(job.handler =~ /UpdateDataJob/) }
     end
   end
 end

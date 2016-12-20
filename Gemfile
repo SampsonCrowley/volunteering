@@ -26,7 +26,9 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'figaro'
 
-gem 'sidekiq'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
+gem 'daemons'
 
 gem 'bcrypt'
 # Use Redis adapter to run Action Cable in production

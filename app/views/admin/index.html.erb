@@ -1,3 +1,4 @@
-<% @schedules.each do |schedule| %>
-  <%= schedule %>
-<% end %>
+<h1> Admin Dashboard </h1>
+<p><%= @schedules.count > 0 ? "Updates scheduled" : "No data updates scheduled. please fix" %></p>
+
+<p> Last Update: <%= StateStat.order("updated_at DESC").last.updated_at %> </p>
