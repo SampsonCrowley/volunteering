@@ -13,6 +13,9 @@
  *= require_tree .
  *= require_self
  */
+ hr {
+   margin: 30px 0;
+ }
  nav {
    padding:10px;
    font-size: 20px;
