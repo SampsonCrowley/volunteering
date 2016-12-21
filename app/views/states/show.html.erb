@@ -1,7 +1,100 @@
 <h1>Detailed Demographics for <%= @state %></h1>
 
+<div id="chartContainerMain" style="height: 300px; width: 100%;"></div>
+<hr>
+<div id="chartContainerVolRate" style="height: 300px; width: 100%;"></div>
+<script type="text/javascript">
+addLoadEvent(function() {
+  var chartMain = new CanvasJS.Chart("chartContainerMain",
+  {
+    title:{
+      text: "Breakup of Charity by Category"
+    },
+    animationEnabled: true,
+    legend:{
+      verticalAlign: "center",
+      horizontalAlign: "left",
+      fontSize: 20,
+      fontFamily: "Helvetica"
+    },
+    theme: "theme2",
+    data: [
+      {
+        type: "pie",
+        indexLabelFontFamily: "Garamond",
+        indexLabelFontSize: 20,
+        indexLabel: "{label} {y}%",
+        startAngle:-20,
+        showInLegend: true,
+        toolTipContent:"{legendText} {y}%",
+        dataPoints: [
+          <% @results[0].each do |name, percentage| %>
+          {  y: <%= percentage %>, legendText:"<%= name %>", label: "<%= name %>" },
+          <% end %>
+        ]
+      }
+    ]
+  });
+  chartMain.render();
 
-<div>
-  <h3>Percentage of Population donating to charity</h3>
-  <p><%= @results %><p>
-</div>
+  var chartVolRate = new CanvasJS.Chart("chartContainerVolRate",
+  {
+
+    title:{
+      text: "Percentage of Population Volunteering by Year",
+      fontSize: 30
+    },
+    animationEnabled: true,
+    axisX:{
+
+      gridColor: "Silver",
+      tickColor: "silver",
+      valueFormatString: "YYYY"
+
+    },
+    toolTip:{
+      shared:true
+    },
+    theme: "theme2",
+    axisY: {
+      gridColor: "Silver",
+      tickColor: "silver"
+    },
+    legend:{
+      verticalAlign: "center",
+      horizontalAlign: "right"
+    },
+    data: [
+      {
+        type: "line",
+        showInLegend: true,
+        lineThickness: 2,
+        name: "Percentage",
+        markerType: "square",
+        color: "#F08080",
+        dataPoints: [
+          <% @results[1].select{|a| a[1] ==  "Volunteer Rate"}.each do |rate| %>
+          { x: new Date(<%= rate[0] %>,1,1), y: <%= rate[2] %>},
+          <% end %>
+        ]
+      },
+
+
+    ],
+    legend:{
+      cursor:"pointer",
+      itemclick:function(e){
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        }
+        else{
+          e.dataSeries.visible = true;
+        }
+        chartVolRate.render();
+      }
+    }
+  });
+
+  chartVolRate.render();
+})
+</script>

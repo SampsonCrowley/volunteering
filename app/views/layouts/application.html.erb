@@ -8,9 +8,47 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <script>
+  function addLoadEvent(func) {
+    var oldonload = window.onload;
+    if (typeof window.onload != 'function') {
+      window.onload = func;
+    } else {
+      window.onload = function() {
+        if (oldonload) {
+          oldonload();
+        }
+        func();
+      }
+    }
+  }
+  </script>
   <body>
-    <%= yield %>
+    <nav>
+  <%= link_to "Home", root_path %>
+  <% if signed_in_user? %>
+    <span class="pull-right">
+      <%= link_to "Admin", admin_index_path %>
+    </span>
+  <% else %>
+    <%= link_to "Login", login_path %>
+  <% end %>
+</nav>
+<main class="container">
+      <div class="row" id="flash-box">
+        <% flash.each do |type, msg| %>
+        <div class="alert alert-block alert-info">
+          <p><%= msg %></p>
+        </div>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <%= yield %>
+        </div>
+      </div>
+    </main>
   </body>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 </html>

@@ -3,7 +3,7 @@ class StatesController < ApplicationController
 
   def index
     unless params[:state]
-      @results = StateStat.all.map {|state| [state.state, state.metrics]}
+      @results = StateStat.all.map {|state| [state.state, state.main_mt]}
     else
       redirect_to state_path(params[:state])
     end
@@ -11,6 +11,7 @@ class StatesController < ApplicationController
   end
 
   def show
+    @state = params[:id]
     @states = state_names
     soda = Soda.new
     @results = soda.detailed(params[:id])
