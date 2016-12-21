@@ -1,6 +1,8 @@
 <h1> Welcome to the Volunteer Dashboard! </h1>
-
 <%= render partial: 'shared/state_select', locals: {states: @states} %>
+
+<h3>Below is a breakdown of volunteering categories Per State</h3>
+
 <hr>
 
 <% @results.each do |state, metrics| %>
