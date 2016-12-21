@@ -14,8 +14,10 @@ module Odata
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :delayed_job
 
-  # config.after_initialize do
-  #   FixCountersJob.perform_later if Delayed::Job.all.none? {|job| !!(job.handler =~ /FixCountersJob/) }
-  # end
+    config.after_initialize do
+      if ActiveRecord::Base.connection.table_exists? 'delayed_jobs'
+        UpdateDataJob.perform_later if Delayed::Job.all.none? {|job| !!(job.handler =~ /UpdateDataJob/) }
+      end
+    end
   end
 end
