@@ -1,5 +1,6 @@
 <h1>Detailed Demographics for <%= @state %></h1>
-
+<%= render partial: 'shared/state_select', locals: {states: @states} %>
+<hr>
 <div id="chartContainerMain" style="height: 300px; width: 100%;"></div>
 <hr>
 <div id="chartContainerVolRate" style="height: 300px; width: 100%;"></div>

@@ -1,0 +1,6 @@
+<p> please select a state to view more in-depth statistics </p>
+
+<form action="<%= states_path %>">
+  <%= select_tag "state", options_for_select(states) %>
+  <button type="submit">View State</button>
+</form>

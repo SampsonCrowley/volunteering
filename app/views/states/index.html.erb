@@ -1,17 +1,13 @@
 <h1> Welcome to the Volunteer Dashboard! </h1>
 
-<p> please select a state to view more in-depth statistics </p>
-
-<form action="<%= states_path %>">
-  <%= select_tag "state", options_for_select(@states) %>
-  <button type="submit">View State</button>
-</form>
+<%= render partial: 'shared/state_select', locals: {states: @states} %>
+<hr>
 
 <% @results.each do |state, metrics| %>
 <div id="chartContainer<%= state.gsub(" ", "") %>" style="height: 300px; width: 100%;"></div>
+<hr>
 <script type="text/javascript">
   addLoadEvent(function() {
-    console.log("Loaded <%= state.gsub(" ", "") %>")
     var chart<%= state.gsub(" ", "") %> = new CanvasJS.Chart("chartContainer<%= state.gsub(" ", "") %>",
     {
       title:{
@@ -32,11 +28,11 @@
         indexLabelFontSize: 20,
         indexLabel: "{label} {y}%",
         startAngle:-20,
-        showInLegend: true,
+        showInLegend: false,
         toolTipContent:"{legendText} {y}%",
         dataPoints: [
           <% metrics.each do |name, percentage| %>
-            {  y: <%= percentage %>, legendText:"<%= name %>", label: "<%= name %>" },
+            {  y: <%= percentage %>, label: "<%= name %>" },
           <% end %>
         ]
       }
